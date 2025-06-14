@@ -40,7 +40,8 @@ const bgRandom = Math.floor(Math.random() * 10 + 1);
 const changeBg = (type) => {
   if (type == 0) {
     if (import.meta.env.VITE_IMAGE_EXTERNAL_URL === 'true') {
-      bgUrl.value = `https://cdn.jsdmirror.cn/gh/FrecklyComb1728/image-oss@master/home-image/background${bgRandom}.jpg`;
+      const externalUrl = import.meta.env.VITE_EXTERNAL_BACKGROUND_URL;
+      bgUrl.value = externalUrl.replace('{bgrandom}', bgRandom);
     } else {
       bgUrl.value = `/home-image/background${bgRandom}.jpg`;
     }

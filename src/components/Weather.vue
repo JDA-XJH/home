@@ -64,8 +64,8 @@ const getWeatherData = async () => {
         weatherData.city = result.city;
         weatherData.data = {
           type: result.data.type,
-          low: result.data.low.replace('℃', ''),
-          high: result.data.high.replace('℃', ''),
+          low: result.data.low.replace(/[°C]/g, ''),
+          high: result.data.high.replace(/[°C]/g, ''),
           fengxiang: result.data.fengxiang,
           fengli: result.data.fengli,
         };
