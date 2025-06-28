@@ -57,8 +57,6 @@ const getWeatherData = async () => {
     }
   } catch (error) {
     try {
-      // 使用韩小韩 API 作为兜底
-      console.log("尝试使用韩小韩天气接口");
       const result = await getOtherWeather();
       if (result.success) {
         weatherData.city = result.city;
@@ -70,11 +68,10 @@ const getWeatherData = async () => {
           fengli: result.data.fengli,
         };
       } else {
-        console.warn("韩小韩天气接口返回失败状态");
-        throw "韩小韩天气接口失败";
+        console.warn("天气接口返回失败状态");
+        throw "天气接口失败";
       }
     } catch (hanError) {
-      console.error("所有天气接口均失败:", hanError);
       weatherData.city = null;
       weatherData.data = {
         type: null,

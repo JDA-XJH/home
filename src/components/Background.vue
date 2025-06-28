@@ -31,7 +31,7 @@ const store = mainStore();
 const bgUrl = ref(null);
 const imgTimeout = ref(null);
 const emit = defineEmits(["loadComplete"]);
-
+const mainUrl = import.meta.env.VITE_EXTERNAL_BACKGROUND_URL;
 // 壁纸随机数
 // 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
 const bgRandom = Math.floor(Math.random() * 10 + 1);
@@ -39,18 +39,17 @@ const bgRandom = Math.floor(Math.random() * 10 + 1);
 // 更换壁纸链接
 const changeBg = (type) => {
   if (type == 0) {
-    if (import.meta.env.VITE_IMAGE_EXTERNAL_URL === 'true') {
-      const externalUrl = import.meta.env.VITE_EXTERNAL_BACKGROUND_URL;
-      bgUrl.value = externalUrl.replace('{bgrandom}', bgRandom);
+    if (mainUrl) {
+      bgUrl.value = mainUrl.replace('{bgrandom}', bgRandom);
     } else {
       bgUrl.value = `/home-image/background${bgRandom}.jpg`;
     }
   } else if (type == 1) {
-    bgUrl.value = "https://api.dujin.org/bing/1920.php";
+    bgUrl.value = "https://bing.img.run/uhd.php";
   } else if (type == 2) {
-    bgUrl.value = "https://api.aixiaowai.cn/gqapi/gqapi.php";
+    bgUrl.value = "https://tu.ltyuanfang.cn/api/fengjing.php";
   } else if (type == 3) {
-    bgUrl.value = "https://api.aixiaowai.cn/api/api.php";
+    bgUrl.value = "https://api.imlazy.ink/img";
   }
 };
 
