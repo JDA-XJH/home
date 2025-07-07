@@ -5,9 +5,9 @@
     <div class="logo">
       <img class="logo-img" :src="siteLogo" alt="logo" />
       <div :class="{ name: true, 'text-hidden': true, long: siteUrl[0].length >= 6 }">
-        <span class="bg">MiFeng</span>
-        <!-- <span class="bg">{{ siteUrl[0] }}</span> -->
-        <!-- <span class="sm">.{{ siteUrl[1] }}</span> -->
+        <!-- <span class="bg">MiFeng</span> -->
+        <span class="bg">{{ siteUrl[0] }}</span>
+        <span class="sm">.{{ siteUrl[1] }}</span>
       </div>
     </div>
     <!-- 简介 -->
