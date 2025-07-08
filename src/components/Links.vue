@@ -9,7 +9,7 @@
     <!-- 网站列表 -->
     <Swiper
       v-if="siteLinks[0]"
-      :modules="[Pagination, Mousewheel]"
+      :modules="modules"
       :slides-per-view="1"
       :space-between="40"
       :pagination="{
@@ -42,14 +42,20 @@
 
 <script setup>
 import { Icon } from "@vicons/utils";
+import { computed, onMounted } from 'vue';
 // 可前往 https://www.xicons.org 自行挑选并在此处引入
 import { Link, Blog, CompactDisc, Cloud, Compass, Toolbox, Fire, LaptopCode } from "@vicons/fa"; // 注意使用正确的类别
 import { mainStore } from "@/store";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination, Mousewheel } from "swiper";
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+// Import required modules
+import { Pagination, Mousewheel } from 'swiper/modules';
 import siteLinks from "@/assets/siteLinks.json";
 
 const store = mainStore();
+const modules = [Pagination, Mousewheel];
 
 // 计算网站链接
 const siteLinksList = computed(() => {
