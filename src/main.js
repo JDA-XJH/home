@@ -16,8 +16,18 @@ app.use(pinia);
 app.mount("#app");
 
 // PWA
-navigator.serviceWorker.addEventListener("controllerchange", () => {
-  // 弹出更新提醒
-  console.log("站点已更新，刷新后生效");
-  ElMessage("站点已更新，刷新后生效");
-});
+if ('serviceWorker' in navigator) {
+  // 首次加载时不显示更新提示
+  let isFirstVisit = !localStorage.getItem('app_visited');
+  
+  // 记录已访问标记
+  localStorage.setItem('app_visited', 'true');
+  
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    // 只在非首次访问时显示更新提示
+    if (!isFirstVisit) {
+      console.log("站点已更新，刷新后生效");
+      ElMessage("站点已更新，刷新后生效");
+    }
+  });
+}
