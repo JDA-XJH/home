@@ -2,7 +2,7 @@
   {
     "icon": "Blog",
     "name": "个人Blog",
-    "link": "https://blog.iambees.com/"
+    "link": "https://blog.imbee.top/"
   },
   {
     "icon": "Compass",
@@ -24,4 +24,9 @@
     "name": "工具箱",
     "link": "https://tools.mfawa.top/"
   }
+  {
+    "icon": "Cloud",
+    "name": "OpenList",
+    "link": "https://op.imbee.top/"
+  },
 ]
