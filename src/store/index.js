@@ -22,9 +22,9 @@ export const mainStore = defineStore("main", {
       playerLrc: "歌词加载中", // 当前播放歌词
       playerLrcShow: true, // 是否显示底栏歌词
       footerBlur: true, // 底栏模糊
-      playerAutoplay: false, // 是否自动播放
+      playerAutoplay: true, // 是否自动播放
       playerLoop: "all", // 循环播放 "all", "one", "none"
-      playerOrder: "list", // 循环顺序 "list", "random"
+      playerOrder: "random", // 循环顺序 "list", "random"
     };
   },
   getters: {
