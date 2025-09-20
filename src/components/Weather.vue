@@ -37,14 +37,15 @@ const weatherData = reactive({
 // 获取天气数据
 const getWeatherData = async () => {
   try {
+    // 使用新的地理位置API
+    const locationData = await getAdcode();
+    if (locationData.code !== 200) {
+      throw "地区查询失败";
+    }
+    weatherData.city = locationData.data.city;
     if (mainKey) {
-      // 使用高德地图 API
-      const adCode = await getAdcode(mainKey);
-      if (adCode.infocode !== "10000") {
-        throw "地区查询失败";
-      }
-      weatherData.city = adCode.city;
-      const result = await getWeather(mainKey, adCode.adcode);
+      // 如果配置了高德Key，仍然使用高德天气API
+      const result = await getWeather(mainKey, locationData.data.districtCode);
       weatherData.data = {
         type: result.lives[0].weather,
         low: result.lives[0].temperature,
@@ -53,6 +54,7 @@ const getWeatherData = async () => {
         fengli: result.lives[0].windpower,
       };
     } else {
+      // 没有配置高德Key，尝试使用备用API
       throw "未配置高德Key";
     }
   } catch (error) {

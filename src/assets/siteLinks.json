@@ -6,6 +6,12 @@
     "link": "https://blog.imbee.top/"
   },
   {
+    "icon": "Server",
+    "iconUrl": "",
+    "name": "NB优选",
+    "link": "https://www.byoip.top/"
+  },
+  {
     "icon": "Compass",
     "iconUrl": "",
     "name": "让我为你搜索",
@@ -24,15 +30,15 @@
     "link": "https://status.mfawa.top"
   },
   {
-    "icon": "Toolbox",
-    "iconUrl": "",
-    "name": "工具箱",
-    "link": "https://tools.mfawa.top/"
-  },
-  {
     "icon": "Cloud",
     "iconUrl": "",
     "name": "OpenList",
     "link": "https://file.mfawa.top/"
+  },
+  {
+    "icon": "Toolbox",
+    "iconUrl": "",
+    "name": "工具箱",
+    "link": "https://tools.mfawa.top/"
   }
 ]

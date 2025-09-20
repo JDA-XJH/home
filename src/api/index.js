@@ -53,9 +53,9 @@ export const getHitokoto = async () => {
  * 天气
  */
 
-// 获取高德地理位置信息
-export const getAdcode = async (key) => {
-  const res = await fetch(`https://restapi.amap.com/v3/ip?key=${key}`);
+// 获取地理位置信息
+export const getAdcode = async () => {
+  const res = await fetch(`https://api.songzixian.com/api/ip?dataSource=GLOBAL_IP`);
   return await res.json();
 };
 
