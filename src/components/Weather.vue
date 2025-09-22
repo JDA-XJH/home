@@ -45,7 +45,7 @@ const getWeatherData = async () => {
     weatherData.city = locationData.data.city;
     if (mainKey) {
       // 如果配置了高德Key，仍然使用高德天气API
-      const result = await getWeather(mainKey, locationData.data.districtCode);
+      const result = await getWeather(mainKey, locationData.data.city);
       weatherData.data = {
         type: result.lives[0].weather,
         low: result.lives[0].temperature,
