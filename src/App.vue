@@ -81,9 +81,9 @@ onMounted(() => {
   // 屏蔽右键
   document.oncontextmenu = () => {
     ElMessage({
-      message: "为了浏览体验，本站禁用右键",
+      message: "Para su experiencia de navegación, el clic derecho está deshabilitado en este sitio.",
       grouping: true,
-      duration: 2000,
+      duration: 4000,
     });
     return false;
   };
@@ -107,14 +107,15 @@ onMounted(() => {
   const styleTitle1 = "font-size: 20px;font-weight: 600;color: rgb(244,167,89);";
   const styleTitle2 = "font-size:12px;color: rgb(244,167,89);";
   const styleContent = "color: rgb(30,152,255);";
-  const title1 = "MiFengの主页";
+  const title1 = "Pagina Princpal de Xiaojie Huang";
   const title2 = `
-  __  __  _  _____  _____  _   _   ____ 
- |  \\/  |(_)|  ___|| ____|| \\ | | / ___|
- | |\\/| || || |_   |  _|  |  \\| || |  _ 
- | |  | || ||  _|  | |___ | |\\  || |_| |
- |_|  |_||_||_|    |_____||_| \\_| \\____|`;
-  const content = `\n\n版本: ${config.version}\n主页: ${config.home}\nGithub: ${config.github}`;
+              __  .__                                                    
+___  ___     |__| |  |__             ______   _____       ____     ____  
+\  \/  /     |  | |  |  \    ______  \____ \  \__  \     / ___\  _/ __ \ 
+ >    <      |  | |   Y  \  /_____/  |  |_> >  / __ \_  / /_/  > \  ___/ 
+/__/\_ \ /\__|  | |___|  /           |   __/  /____  /  \___  /   \___  >
+      \/ \______|      \/            |__|          \/  /_____/        \/ `;
+  const content = `\n\nVersion: ${config.version}\n:Pagina Princpal: ${config.home}\nGithub: ${config.github}`;
   console.info(`%c${title1} %c${title2} %c${content}`, styleTitle1, styleTitle2, styleContent);
 });
 
