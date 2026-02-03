@@ -4,13 +4,13 @@
       <hourglass-full theme="two-tone" size="24" :fill="['#efefef', '#00000020']" />
       <span>Cápsula del tiempo</span>
     </div>
-    <span class="text">Hoy ya pasó&nbsp;{{ timeData.day.elapsed }}&nbsp;horas</span>
+    <span class="text">Hoy ya pasó &nbsp;{{ timeData.day.elapsed }}&nbsp;horas</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.day.pass" />
-    <span class="text">Esta semana ya pasó.&nbsp;{{ timeData.week.elapsed }}&nbsp;días</span>
+    <span class="text">Esta semana ya pasó &nbsp;{{ timeData.week.elapsed }}&nbsp;días</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.week.pass" />
-    <span class="text">Este mes ya pasó&nbsp;{{ timeData.month.elapsed }}&nbsp;días</span>
+    <span class="text">Este mes ya pasó &nbsp;{{ timeData.month.elapsed }}&nbsp;días</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.month.pass" />
-    <span class="text">Este año ya pasó.&nbsp;{{ timeData.year.elapsed }}&nbsp;meses</span>
+    <span class="text">Este año ya pasó &nbsp;{{ timeData.year.elapsed }}&nbsp;meses</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.year.pass" />
     <div v-if="startDate?.length >= 4 && store.siteStartShow">
       <span class="text" v-html="startDateText" />
