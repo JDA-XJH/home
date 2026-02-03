@@ -2,31 +2,31 @@
   {
     "icon": "Blog",
     "iconUrl": "",
-    "name": "个人Blog",
+    "name": "Blog",
     "link": "https://blog.1224hj.top/"
   },
   {
     "icon": "Server",
     "iconUrl": "",
-    "name": "NB优选(Mifeng的)",
+    "name": "",
     "link": "https://www.byoip.top/"
   },
   {
     "icon": "Compass",
     "iconUrl": "",
-    "name": "让我为你搜索",
+    "name": "let me search for you",
     "link": "https://mfawa.top"
   },
   {
     "icon": "Fire",
     "iconUrl": "",
-    "name": "今日热榜",
+    "name": "Today's hot list",
     "link": "https://hot.mfawa.top/"
   },
   {
     "icon": "LaptopCode",
     "iconUrl": "",
-    "name": "站点监测",
+    "name": "Site monitoring",
     "link": "https://status.mfawa.top"
   },
   {
@@ -38,7 +38,7 @@
   {
     "icon": "Toolbox",
     "iconUrl": "",
-    "name": "工具箱",
+    "name": "Toolbox",
     "link": "https://tools.mfawa.top/"
   }
 ]
