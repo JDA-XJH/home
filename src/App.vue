@@ -81,7 +81,7 @@ onMounted(() => {
   // 屏蔽右键
   document.oncontextmenu = () => {
     ElMessage({
-      message: "为了浏览体验，本站禁用右键",
+      message: "Para una mejor experiencia de navegación, el clic derecho está deshabilitado en este sitio.",
       grouping: true,
       duration: 2000,
     });
@@ -93,7 +93,7 @@ onMounted(() => {
     if (event.button == 1) {
       store.backgroundShow = !store.backgroundShow;
       ElMessage({
-        message: `已${store.backgroundShow ? "开启" : "退出"}壁纸展示状态`,
+        message: `Ya${store.backgroundShow ? "activado" : "abandonar"}estado de visualización del fondo de pantalla`,
         grouping: true,
       });
     }
@@ -107,15 +107,15 @@ onMounted(() => {
   const styleTitle1 = "font-size: 20px;font-weight: 600;color: rgb(244,167,89);";
   const styleTitle2 = "font-size:12px;color: rgb(244,167,89);";
   const styleContent = "color: rgb(30,152,255);";
-  const title1 = "1224HuangJinの主页";
-  const title2 = `
-  ____________ ________    _____    ___ ___                                  ____.__        
-/_   \_____  \\_____  \  /  |  |  /   |   \ __ _______    ____    ____     |    |__| ____  
- |   |/  ____/ /  ____/ /   |  |_/    ~    \  |  \__  \  /    \  / ___\    |    |  |/    \ 
- |   /       \/       \/    ^   /\    Y    /  |  // __ \|   |  \/ /_/  >\__|    |  |   |  \
- |___\_______ \_______ \____   |  \___|_  /|____//____  /___|  /\___  /\________|__|___|  /
-             \/       \/    |__|        \/            \/     \//_____/                  \/ `;
-  const content = `\n\n版本: ${config.version}\n主页: ${config.home}\nGithub: ${config.github}`;
+  const title1 = "Pagina principal de XJH";
+  const title2 =`
+     ____. ________       _____              ____  ___      ____.   ___ ___  
+    |    | \______ \     /  _  \             \   \/  /     |    |  /   |   \ 
+    |    |  |    |  \   /  /_\  \    ______   \     /      |    | /    |    \
+/\__|    |  |    `   \ /    |    \  /_____/   /     \  /\__|    | \    |    /
+\________| /_______  / \____|__  /           /___/\  \ \________|  \___|_  / 
+                   \/          \/                  \_/                   \/  `;
+  const content = `\n\nVersión: ${config.version}\nPagina Principal: ${config.home}\nGithub: ${config.github}`;
   console.info(`%c${title1} %c${title2} %c${content}`, styleTitle1, styleTitle2, styleContent);
 });
 

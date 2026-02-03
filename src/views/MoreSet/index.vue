@@ -18,14 +18,14 @@
         </div>
         <div class="version">
           <div class="num">v&nbsp;{{ config.version }}</div>
-          <el-tooltip content="Github 源代码仓库" placement="right" :show-arrow="false">
+          <el-tooltip content="Github Repositorio de código fuente" placement="right" :show-arrow="false">
             <github-one class="github" theme="outline" size="24" @click="jumpTo(config.github)" />
           </el-tooltip>
         </div>
         <el-card class="update">
           <template #header>
             <div class="card-header">
-              <span>更新日志</span>
+              <span>Update Log</span>
             </div>
           </template>
           <div class="upnote">
@@ -43,7 +43,7 @@
       <el-col :span="12" class="right">
         <div class="title">
           <setting-two theme="filled" size="28" fill="#ffffff60" />
-          <span class="name">全局设置</span>
+          <span class="name">Configuración global</span>
         </div>
         <Set />
       </el-col>
@@ -75,12 +75,12 @@ const siteUrl = computed(() => {
 // 更新日志
 const upData = reactive({
   new: [
-    "采用 Vue 进行重构",
-    "音乐歌单支持快速自定义",
-    "壁纸支持个性化设置",
-    "音乐播放器支持音量控制",
+    "采用 Vue 进行重构 - Refactorización usando Vue(Mifen's update)",
+    "音乐歌单支持快速自定义 - Las listas de reproducción de música admiten una personalización rápida(Mifen's update)",
+    "壁纸支持个性化设置 - Los fondos de pantalla admiten configuraciones personalizadas(Mifen's Update)",
+    "音乐播放器支持音量控制 - Los reproductores de música admiten control de volumen(Mifen's update)",
   ],
-  fix: ["修改天气 API", "时光胶囊显示错误", "移动端动画及细节", "图标更换为 IconPark"],
+  fix: ["修改天气 API - Modificar la API meteorológica(Mifen's fixed)", "时光胶囊显示错误 - Time Capsule muestra un error.(Fix by Mifen)", "移动端动画及细节 - Animación móvil y detalles(Fix by Mifen)", "图标更换为 IconPark - El icono ha sido cambiado a IconPark.(Fix by Mifen's)"],
 });
 
 // 跳转源代码仓库

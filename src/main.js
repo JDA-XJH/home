@@ -26,8 +26,8 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     // 只在非首次访问时显示更新提示
     if (!isFirstVisit) {
-      console.log("站点已更新，刷新后生效");
-      ElMessage("站点已更新，刷新后生效");
+      console.log("El sitio ha sido actualizado; actualice la página para que los cambios surtan efecto.");
+      ElMessage("El sitio ha sido actualizado; actualice la página para que los cambios surtan efecto.");
     }
   });
 }

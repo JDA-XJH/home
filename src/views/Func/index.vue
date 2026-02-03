@@ -12,9 +12,9 @@
         <div class="right cards">
           <div class="time">
             <div class="date">
-              <span>{{ currentTime.year }}&nbsp;年&nbsp;</span>
-              <span>{{ currentTime.month }}&nbsp;月&nbsp;</span>
-              <span>{{ currentTime.day }}&nbsp;日&nbsp;</span>
+              <span>{{ currentTime.year }}&nbsp;años&nbsp;</span>
+              <span>{{ currentTime.month }}&nbsp;mes&nbsp;</span>
+              <span>{{ currentTime.day }}&nbsp;dias&nbsp;</span>
               <span class="sm-hidden">{{ currentTime.weekday }}</span>
             </div>
             <div class="text">
