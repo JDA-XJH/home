@@ -93,7 +93,7 @@ onMounted(() => {
         store.musicIsOk = true;
         // 生成歌单
         playList.value = res;
-        console.log("音乐加载完成");
+        console.log("Carga de música completa");
         console.log(playList.value);
         console.log(playIndex.value, playList.value.length, props.volume);
       });
@@ -101,7 +101,7 @@ onMounted(() => {
       console.error(err);
       store.musicIsOk = false;
       ElMessage({
-        message: "播放器加载失败",
+        message: "El reproductor no se pudo cargar",
         grouping: true,
         icon: h(PlayWrong, {
           theme: "filled",
@@ -114,7 +114,7 @@ onMounted(() => {
 
 // 播放
 const onPlay = () => {
-  console.log("播放");
+  console.log("Tocar Música");
   playIndex.value = player.value.aplayer.index;
   // 播放状态
   store.setPlayerState(player.value.audioRef.paused);
@@ -144,9 +144,9 @@ const onTimeUp = () => {
   }
   let lrc = lyrics[lyricIndex][1];
   if (lrc === "Loading") {
-    lrc = "歌词加载中";
+    lrc = "Cargando letras";
   } else if (lrc === "Not available") {
-    lrc = "歌词加载失败";
+    lrc = "No se pudo cargar la letra";
   }
   store.setPlayerLrc(lrc);
 };
@@ -178,9 +178,9 @@ const toggleList = () => {
 const loadMusicError = () => {
   let notice = "";
   if (playList.value.length > 1) {
-    notice = "播放歌曲出现错误，播放器将在 2s 后进行下一首";
+    notice = "Se produjo un error al reproducir la canción. El reproductor iniciará la siguiente canción en 2 segundos.";
   } else {
-    notice = "播放歌曲出现错误";
+    notice = "Se produjo un error al reproducir la canción.";
   }
   ElMessage({
     message: notice,
@@ -192,7 +192,7 @@ const loadMusicError = () => {
     }),
   });
   console.error(
-    "播放歌曲: " + player.value.aplayer.audio[player.value.aplayer.index].name + " 出现错误",
+    "Reproducir canción: " + player.value.aplayer.audio[player.value.aplayer.index].name + " se produjo un error",
   );
 };
 

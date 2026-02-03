@@ -9,7 +9,7 @@
     <span class="sm-hidden">{{ weatherData.data.fengli }}</span>
   </div>
   <div class="weather" v-else>
-    <span>天气数据获取失败</span>
+    <span>Falló la adquisición de datos meteorológicos</span>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ const getWeatherData = async () => {
     // 使用新的地理位置API
     const locationData = await getAdcode();
     if (locationData.code !== 200) {
-      throw "地区查询失败";
+      throw "Error en la búsqueda de región";
     }
     weatherData.city = locationData.data.city;
     if (mainKey) {
@@ -55,7 +55,7 @@ const getWeatherData = async () => {
       };
     } else {
       // 没有配置高德Key，尝试使用备用API
-      throw "未配置高德Key";
+      throw "Clave Gaode no configurada";
     }
   } catch (error) {
     try {
@@ -70,8 +70,8 @@ const getWeatherData = async () => {
           fengli: result.data.fengli,
         };
       } else {
-        console.warn("天气接口返回失败状态");
-        throw "天气接口失败";
+        console.warn("La interfaz meteorológica devolvió un estado de error.");
+        throw "La interfaz meteorológica falló";
       }
     } catch (hanError) {
       weatherData.city = null;
@@ -82,7 +82,7 @@ const getWeatherData = async () => {
         fengxiang: null,
         fengli: null,
       };
-      onError("天气信息获取失败");
+      onError("No se pudo recuperar la información meteorológica");
     }
   }
 };

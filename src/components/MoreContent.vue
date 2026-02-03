@@ -1,5 +1,5 @@
 <template>
-  <div class="more-content">野火烧不尽，春风吹又生！</div>
+  <div class="more-content">OwO</div>
 </template>
 
 <style lang="scss" scoped>

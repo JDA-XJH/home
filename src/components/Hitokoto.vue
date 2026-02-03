@@ -14,7 +14,7 @@
         @click="store.musicOpenState = true"
       >
         <music-menu theme="filled" size="18" fill="#efefef" />
-        <span>打开音乐播放器</span>
+        <span>Habrir reproductor de música</span>
       </div>
     </Transition>
     <!-- 一言内容 -->
@@ -40,8 +40,8 @@ const openMusicShow = ref(false);
 
 // 一言数据
 const hitokotoData = reactive({
-  text: "这里应该显示一句话",
-  from: "1224HuangJin",
+  text: "Esto debería mostrar una oración.",
+  from: "XJH",
 });
 
 // 获取一言数据
@@ -52,14 +52,14 @@ const getHitokotoData = async () => {
     hitokotoData.from = result.from;
   } catch (error) {
     ElMessage({
-      message: "一言获取失败",
+      message: "Una palabra no logró obtener",
       icon: h(Error, {
         theme: "filled",
         fill: "#efefef",
       }),
     });
-    hitokotoData.text = "这里应该显示一句话";
-    hitokotoData.from = "1224HuangJin";
+    hitokotoData.text = "Esto debería mostrar una oración.";
+    hitokotoData.from = "XJH";
   }
 };
 

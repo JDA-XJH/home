@@ -19,9 +19,9 @@
           </a>
         </span>
         <!-- 站点备案 -->
-        <!-- <a href="https://icp.gov.moe/?keyword=20261224" target="_blank">萌ICP备20261224号</a> -->
+        <!-- <a href="https://icp.gov.moe/?keyword=20261224" target="_blank"></a> -->
         <!-- <a v-if="siteIcp" href="https://beian.miit.gov.cn" target="_blank"> -->
-             <a v-if="siteIcp" href="https://icp.gov.moe/?keyword=20261224" target="_blank">
+             <a v-if="siteIcp" href="https://icp.gov.moe/" target="_blank">
           &amp;
           {{ siteIcp }}
         </a>

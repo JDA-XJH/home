@@ -2,15 +2,15 @@
   <div class="time-capsule">
     <div class="title">
       <hourglass-full theme="two-tone" size="24" :fill="['#efefef', '#00000020']" />
-      <span>时光胶囊</span>
+      <span>Cápsula del tiempo</span>
     </div>
-    <span class="text">今日已经度过了&nbsp;{{ timeData.day.elapsed }}&nbsp;小时</span>
+    <span class="text">Hoy ya pasó&nbsp;{{ timeData.day.elapsed }}&nbsp;horas</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.day.pass" />
-    <span class="text">本周已经度过了&nbsp;{{ timeData.week.elapsed }}&nbsp;天</span>
+    <span class="text">Esta semana ya pasó.&nbsp;{{ timeData.week.elapsed }}&nbsp;días</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.week.pass" />
-    <span class="text">本月已经度过了&nbsp;{{ timeData.month.elapsed }}&nbsp;天</span>
+    <span class="text">Este mes ya pasó&nbsp;{{ timeData.month.elapsed }}&nbsp;días</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.month.pass" />
-    <span class="text">今年已经度过了&nbsp;{{ timeData.year.elapsed }}&nbsp;个月</span>
+    <span class="text">Este año ya pasó.&nbsp;{{ timeData.year.elapsed }}&nbsp;meses</span>
     <el-progress :text-inside="true" :stroke-width="20" :percentage="timeData.year.pass" />
     <div v-if="startDate?.length >= 4 && store.siteStartShow">
       <span class="text" v-html="startDateText" />

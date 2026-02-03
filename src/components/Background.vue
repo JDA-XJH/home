@@ -65,16 +65,16 @@ const imgLoadComplete = () => {
 
 // 图片动画完成
 const imgAnimationEnd = () => {
-  console.log("壁纸加载且动画完成");
+  console.log("Fondo de pantalla cargado y animación completada");
   // 加载完成事件
   emit("loadComplete");
 };
 
 // 图片显示失败
 const imgLoadError = () => {
-  console.error("壁纸加载失败：", bgUrl.value);
+  console.error("No se pudo cargar el fondo de pantalla:", bgUrl.value);
   ElMessage({
-    message: "壁纸加载失败，已临时切换回默认",
+    message: "No se pudo cargar el fondo de pantalla; el fondo de pantalla predeterminado se cambió temporalmente.",
     icon: h(Error, {
       theme: "filled",
       fill: "#efefef",
