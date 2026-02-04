@@ -36,7 +36,7 @@ const simplifyCity = (name) => {
   let city = name.replace(/[市区县省]$/g, "");
   // 针对国外城市名（如 San Francisco, CA）只取逗号前的部分
   city = city.split(",")[0];
-  // 最终截取前 6 个字符防止撑爆
+  // 最终截取前 10 个字符防止撑爆
   return city.length > 10 ? city.substring(0, 10) + ".." : city;
 };
 
@@ -44,30 +44,38 @@ const simplifyCity = (name) => {
 const simplifyWind = (dir) => {
   if (!dir) return "";
   const map = {
-    "北风": "北", "东北风": "东北", "东风": "东", "东南风": "东南",
-    "南风": "南", "西南风": "西南", "西风": "西", "西北风": "西北",
+    "北风": "Norte", "东北风": "NE", "东风": "E", "东南风": "SE",
+    "南风": "S", "西南风": "SW", "西风": "W", "西北风": "NW",
     "North": "N", "Northeast": "NE", "East": "E", "Southeast": "SE",
     "South": "S", "Southwest": "SW", "West": "W", "Northwest": "NW"
   };
   return map[dir] || dir;
 };
 
-// WMO 天气代码转中文描述
+// WMO 天气代码转西语描述（由Gemini翻译）
 const weatherMap = {
-  0: "晴朗", 1: "晴间多云", 2: "多云", 3: "阴天",
-  45: "雾", 48: "霾", 51: "毛毛雨", 61: "小雨",
-  71: "小雪", 80: "阵雨", 95: "雷阵雨"
+  0: "Despejado",         // 晴朗
+  1: "Parcialmente nublado", // 晴间多云
+  2: "Nublado",           // 多云
+  3: "Cubierto",          // 阴天 (更强调云层覆盖)
+  45: "Niebla",           // 雾
+  48: "Calima",           // 霾 (也可以用 Neblina 描述薄雾)
+  51: "Llovizna",         // 毛毛雨
+  61: "Lluvia ligera",    // 小雨
+  71: "Nieve ligera",     // 小雪
+  80: "Chubascos",        // 阵雨
+  95: "Tormenta"          // 雷阵雨
 };
 
-// 获取风力等级 (蒲福氏风级)
+// Obtener escala de viento (Escala de Beaufort) 获取风力等级 (蒲福氏风级) [Traducido con Gemini]
 const getWindScale = (speed) => {
-  if (speed < 1) return "0级";
-  if (speed < 6) return "1级";
-  if (speed < 12) return "2级";
-  if (speed < 20) return "3级";
-  if (speed < 29) return "4级";
-  if (speed < 39) return "5级";
-  return "强风";
+  if (speed < 1) return "Calma";            // 0级：无风/平静
+  if (speed < 6) return "Ventolina";        // 1级：软风
+  if (speed < 12) return "Brisa muy débil"; // 2级：轻风
+  if (speed < 20) return "Brisa ligera";    // 3级：微风
+  if (speed < 29) return "Brisa moderada";  // 4级：和风
+  if (speed < 39) return "Brisa fresca";    // 5级：清风
+  return "Viento fuerte";                   // 强风 (6级及以上)
 };
 
 // 获取风向描述
@@ -92,7 +100,7 @@ const getWeatherData = async () => {
     if (res.data && res.data.current_weather) {
       const now = res.data.current_weather;
       weatherData.data = {
-        type: weatherMap[now.weathercode] || "未知",
+        type: weatherMap[now.weathercode] || "Unknown",
         temp: Math.round(now.temperature),
         fengxiang: getWindDir(now.winddirection),
         fengli: getWindScale(now.windspeed),
@@ -103,7 +111,7 @@ const getWeatherData = async () => {
     // 如果 API 挂了，给一个默认显示状态，不让页面空白
     weatherData.city = "Unknown";
     weatherData.data.type = "Error"; 
-    onError("无法获取天气数据");
+    onError("No se pueden obtener datos meteorológicos.");
   }
 };
 
