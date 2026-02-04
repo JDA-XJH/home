@@ -1,15 +1,17 @@
 <template>
   <div class="weather" v-if="weatherData.city && weatherData.data.type">
-    <span>{{ weatherData.city }}&nbsp;</span>
-    <span>{{ weatherData.data.type }}&nbsp;</span>
-    <span>{{ weatherData.data.temp }}°C</span>
-    <span class="sm-hidden">
-      &nbsp;{{ weatherData.data.fengxiang }}&nbsp;
+    <span class="city-name">{{ simplifyCity(weatherData.city) }}</span>
+    
+    <span class="weather-type">&nbsp;·&nbsp;{{ weatherData.data.type }}</span>
+    
+    <span class="temp">&nbsp;{{ weatherData.data.temp }}°</span>
+    
+    <span class="sm-hidden wind-info">
+      &nbsp;|&nbsp;{{ simplifyWind(weatherData.data.fengxiang) }}{{ weatherData.data.fengli }}
     </span>
-    <span class="sm-hidden">{{ weatherData.data.fengli }}</span>
   </div>
-  <div class="weather" v-else>
-    <span>Falló la adquisición de datos meteorológicos</span>
+  <div class="weather-error" v-else>
+    <span>Weather Hidden</span>
   </div>
 </template>
 
