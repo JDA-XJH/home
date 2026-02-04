@@ -1,0 +1,106 @@
+<template>
+  <div class="weather" v-if="weatherData.city && weatherData.data.type">
+    <span>{{ weatherData.city }}&nbsp;</span>
+    <span>{{ weatherData.data.type }}&nbsp;</span>
+    <span>{{ weatherData.data.low }}°C</span>
+    <span class="sm-hidden">
+      &nbsp;{{ weatherData.data.fengxiang }}&nbsp;
+    </span>
+    <span class="sm-hidden">{{ weatherData.data.fengli }}</span>
+  </div>
+  <div class="weather" v-else>
+    <span>Falló la adquisición de datos meteorológicos</span>
+  </div>
+</template>
+
+<script setup>
+import { h } from "vue";
+import { Error } from "@icon-park/vue-next";
+import { ElMessage } from "element-plus";
+import { getAdcode, getWeather, getOtherWeather } from "@/api";
+
+// 高德开发者 Key
+const mainKey = import.meta.env.VITE_WEATHER_KEY;
+
+// 天气数据
+const weatherData = reactive({
+  city: null, // 城市
+  data: {
+    type: null, // 天气现象
+    low: null, // 最低气温
+    high: null, // 最高气温
+    fengxiang: null, // 风向描述
+    fengli: null, // 风力级别
+  },
+});
+
+// 获取天气数据
+const getWeatherData = async () => {
+  try {
+    // 使用新的地理位置API
+    const locationData = await getAdcode();
+    if (locationData.code !== 200) {
+      throw "Error en la búsqueda de región";
+    }
+    weatherData.city = locationData.data.city;
+    if (mainKey) {
+      // 如果配置了高德Key，仍然使用高德天气API
+      const result = await getWeather(mainKey, locationData.data.city);
+      weatherData.data = {
+        type: result.lives[0].weather,
+        low: result.lives[0].temperature,
+        high: result.lives[0].temperature,
+        fengxiang: result.lives[0].winddirection,
+        fengli: result.lives[0].windpower,
+      };
+    } else {
+      // 没有配置高德Key，尝试使用备用API
+      throw "Clave Gaode no configurada";
+    }
+  } catch (error) {
+    try {
+      const result = await getOtherWeather();
+      if (result.success) {
+        weatherData.city = result.city;
+        weatherData.data = {
+          type: result.data.type,
+          low: result.data.low.replace(/[°C]/g, ''),
+          high: result.data.high.replace(/[°C]/g, ''),
+          fengxiang: result.data.fengxiang,
+          fengli: result.data.fengli,
+        };
+      } else {
+        console.warn("La interfaz meteorológica devolvió un estado de error.");
+        throw "La interfaz meteorológica falló";
+      }
+    } catch (hanError) {
+      weatherData.city = null;
+      weatherData.data = {
+        type: null,
+        low: null,
+        high: null,
+        fengxiang: null,
+        fengli: null,
+      };
+      onError("No se pudo recuperar la información meteorológica");
+    }
+  }
+};
+
+// 报错信息
+const onError = (message) => {
+  ElMessage({
+    message,
+    icon: h(Error, {
+      theme: "filled",
+      fill: "#efefef",
+    }),
+  });
+  console.error(message);
+};
+
+onMounted(() => {
+  // 调用获取天气
+  getWeatherData();
+});
+</script>
