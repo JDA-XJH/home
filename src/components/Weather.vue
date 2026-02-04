@@ -36,8 +36,8 @@ const simplifyCity = (name) => {
   let city = name.replace(/[市区县省]$/g, "");
   // 针对国外城市名（如 San Francisco, CA）只取逗号前的部分
   city = city.split(",")[0];
-  // 最终截取前 10 个字符防止撑爆
-  return city.length > 10 ? city.substring(0, 10) + ".." : city;
+  // 最终截取前 6 个字符防止撑爆
+  return city.length > 6 ? city.substring(0, 6) + ".." : city;
 };
 
 // 3. 辅助函数：缩短风向
