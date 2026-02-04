@@ -1,6 +1,6 @@
 <strong><h2>MiFengの主页</h2></strong>
 **二改于[Imsyy/home](https://github.com/imsyy/home/) 仅自用不建议使用我的**
-
+然后再改于 [FrecklyComb1728/home](https://github.com/FrecklyComb1728/home)
 ### 部署
  如果你并不知道怎么部署请看 <b>[这里](https://github.com/imsyy/home#%EF%B8%8F-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2)</b>
 
@@ -30,6 +30,7 @@
 // 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
 const bgRandom = Math.floor(Math.random() * 10 + 1);
 ```
+
 
 
 
