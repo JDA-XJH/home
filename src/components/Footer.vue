@@ -53,7 +53,7 @@ const siteIcp = ref(import.meta.env.VITE_SITE_ICP);
 const siteAnthor = ref(import.meta.env.VITE_SITE_ANTHOR);
 const siteUrl = computed(() => {
   const url = import.meta.env.VITE_SITE_URL;
-  if (!url) return "https://1224hj.top";
+  if (!url) return "https://xjh011.qzz.io";
   // 判断协议前缀
   if (!url.startsWith("http://") && !url.startsWith("https://")) {
     return "//" + url;

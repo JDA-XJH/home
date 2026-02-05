@@ -58,7 +58,7 @@ const getHitokotoData = async () => {
         fill: "#efefef",
       }),
     });
-    hitokotoData.text = "Esto debería mostrar una oración.";
+    hitokotoData.text = "Aqui debería mostrar una oración.";
     hitokotoData.from = "XJH";
   }
 };

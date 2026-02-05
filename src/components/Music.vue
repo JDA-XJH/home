@@ -7,8 +7,8 @@
     v-show="store.musicOpenState"
   >
     <div class="btns">
-      <span @click="openMusicList()">Lista de Mùsica</span>
-      <span @click="store.musicOpenState = false">Volver a una parabla.</span>
+      <span @click="openMusicList()">Lista Mùsica</span>
+      <span @click="store.musicOpenState = false">Volver a parabla's</span>
     </div>
     <div class="control">
       <go-start theme="filled" size="30" fill="#efefef" @click="changeMusicIndex(0)" />
