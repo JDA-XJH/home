@@ -1,8 +1,9 @@
 <template>
   <div class="weather-wrapper" v-if="weatherData.city && weatherData.data.type">
-    <span class="city-name">{{ weatherData.city }}</span>
-    
-    <span class="divider">|</span>
+    <div class="static-side">
+      <span class="city-name">{{ weatherData.city }}</span>
+      <span class="divider">|</span>
+    </div>
 
     <div class="carousel-container">
       <transition name="slide-fade" mode="out-in">
@@ -21,9 +22,9 @@
         </div>
 
         <div v-else :key="2" class="weather-item">
-          <span class="index-tag">VIENTO</span>
+          <span class="index-tag">🌀</span>
           <span class="wind-full">
-            {{ weatherData.data.fengxiang }} {{ weatherData.data.windSpeed }} km/h
+            {{ weatherData.data.fengxiang }} | {{ weatherData.data.windSpeed }} km/h
           </span>
         </div>
 
@@ -71,9 +72,7 @@ const getWeatherData = async () => {
   try {
     const locRes = await axios.get("https://ipapi.co/json/");
     weatherData.city = locRes.data.city || "Desconocido";
-
     const res = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${locRes.data.latitude}&longitude=${locRes.data.longitude}&current_weather=true`);
-    
     if (res.data?.current_weather) {
       const now = res.data.current_weather;
       weatherData.data = {
@@ -84,15 +83,14 @@ const getWeatherData = async () => {
       };
     }
   } catch (error) {
-    console.error("Error fetching weather:", error);
+    console.error("Error:", error);
   }
 };
 
 onMounted(() => {
   getWeatherData();
-  timer = setInterval(() => { step.value = (step.value + 1) % 3; }, 3500);
+  timer = setInterval(() => { step.value = (step.value + 1) % 3; }, 4000);
 });
-
 onUnmounted(() => clearInterval(timer));
 </script>
 
@@ -103,29 +101,49 @@ onUnmounted(() => clearInterval(timer));
   align-items: center;
   padding: 0 12px;
   color: #fff;
-  border-radius: 4px;
   font-family: 'Segoe UI', system-ui, sans-serif;
-  /* background: rgba(255, 255, 255, 0.05); 如果背景太单调可以开启这行 */
+  /* 防止外部容器塌陷 */
+  overflow: hidden; 
+}
+
+/* 左侧固定：绝对不许动 */
+.static-side {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* 禁止被挤压 */
 }
 
 .city-name {
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
-  /* 确保城市名不会因为后面文字长短而跳动 */
-  min-width: fit-content;
+  white-space: nowrap;
 }
 
 .divider {
-  margin: 0 12px;
-  color: #444;
-  font-weight: 200;
+  margin: 0 10px;
+  color: rgba(255, 255, 255, 0.2);
   user-select: none;
 }
 
+/* 右侧轮播：设定一个足够大的固定宽度 */
 .carousel-container {
-  display: inline-block;
-  min-width: 120px; /* 给轮播区一个最小宽度，防止切换时整体抖动 */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  /* 这个宽度要根据你西语最长的那一行（通常是风向那行）来预估 */
+  /* 如果你的城市空间非常紧，可以稍微调小这个值 */
+  width: 160px; 
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.weather-item {
+  position: absolute; /* 使用绝对定位让各组重叠，切换时就不会撑开父容器 */
+  left: 0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .index-tag {
@@ -136,17 +154,7 @@ onUnmounted(() => clearInterval(timer));
   border-radius: 3px;
   margin-right: 8px;
   font-weight: 800;
-  letter-spacing: 0.5px;
-}
-
-.weather-item {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.weather-icon {
-  margin-right: 4px;
+  flex-shrink: 0;
 }
 
 .temp { font-weight: 700; font-size: 15px; }
@@ -156,10 +164,10 @@ onUnmounted(() => clearInterval(timer));
   font-weight: 500;
 }
 
-/* 动画效果：上下滑动 */
+/* 动画效果 */
 .slide-fade-enter-active, .slide-fade-leave-active {
-  transition: all 0.4s ease;
+  transition: all 0.5s ease;
 }
-.slide-fade-enter-from { transform: translateY(8px); opacity: 0; }
-.slide-fade-leave-to { transform: translateY(-8px); opacity: 0; }
+.slide-fade-enter-from { transform: translateY(12px); opacity: 0; }
+.slide-fade-leave-to { transform: translateY(-12px); opacity: 0; }
 </style>
