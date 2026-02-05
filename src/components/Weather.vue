@@ -1,6 +1,5 @@
 <template>
   <div class="weather-wrapper" v-if="weatherData.city && weatherData.data.type">
-    <span class="city-label">LOC</span>
     <span class="city-name">{{ weatherData.city }}</span>
     
     <span class="divider">|</span>
@@ -63,20 +62,8 @@ const weatherMap = {
   71: "🌨 Ligera", 80: "🌧️ Chubascos", 95: "⛈️ Tormenta"
 };
 
-/**
- * 获取西班牙语风向 (Dirección del viento)
- */
 const getWindDirLabel = (deg) => {
-  const dirs = [
-    "Norte",      // 北
-    "Noreste",    // 东北
-    "Este",       // 东
-    "Sureste",    // 东南
-    "Sur",        // 南
-    "Suroeste",   // 西南
-    "Oeste",      // 西
-    "Noroeste"    // 西北
-  ];
+  const dirs = ["Norte", "Noreste", "Este", "Sureste", "Sur", "Suroeste", "Oeste", "Noroeste"];
   return dirs[Math.round(deg / 45) % 8];
 };
 
@@ -118,33 +105,38 @@ onUnmounted(() => clearInterval(timer));
   color: #fff;
   border-radius: 4px;
   font-family: 'Segoe UI', system-ui, sans-serif;
-}
-
-.city-label, .index-tag {
-  font-size: 9px;
-  background: #333;
-  color: #eee;
-  padding: 1px 5px;
-  border-radius: 3px;
-  margin-right: 8px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-}
-
-.index-tag {
-  background: #007aff; 
+  /* background: rgba(255, 255, 255, 0.05); 如果背景太单调可以开启这行 */
 }
 
 .city-name {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
+  /* 确保城市名不会因为后面文字长短而跳动 */
+  min-width: fit-content;
 }
 
 .divider {
   margin: 0 12px;
   color: #444;
   font-weight: 200;
+  user-select: none;
+}
+
+.carousel-container {
+  display: inline-block;
+  min-width: 120px; /* 给轮播区一个最小宽度，防止切换时整体抖动 */
+}
+
+.index-tag {
+  font-size: 9px;
+  background: #007aff; 
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 8px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
 .weather-item {
@@ -153,17 +145,18 @@ onUnmounted(() => clearInterval(timer));
   white-space: nowrap;
 }
 
-.temp { 
-  font-weight: 700; 
-  font-size: 15px; 
+.weather-icon {
+  margin-right: 4px;
 }
 
+.temp { font-weight: 700; font-size: 15px; }
 .weather-type, .wind-full {
   font-size: 13px;
   color: #efefef;
   font-weight: 500;
 }
 
+/* 动画效果：上下滑动 */
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: all 0.4s ease;
 }
