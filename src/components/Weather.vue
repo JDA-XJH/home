@@ -9,7 +9,7 @@
       <transition name="slide-fade" mode="out-in">
         
         <div v-if="step === 0" :key="0" class="weather-item">
-          <span class="index-tag">TEMP</span>
+          <span class="index-tag">Temperatura</span>
           <span class="weather-icon">{{ extractEmoji(weatherData.data.type) }}</span>
           <span class="temp" :style="{ color: getTempColor(weatherData.data.temp) }">
             {{ weatherData.data.temp }}°C
@@ -17,12 +17,12 @@
         </div>
 
         <div v-else-if="step === 1" :key="1" class="weather-item">
-          <span class="index-tag">COND</span>
+          <span class="index-tag">Condición</span>
           <span class="weather-type">{{ weatherData.data.type }}</span>
         </div>
 
         <div v-else :key="2" class="weather-item">
-          <span class="index-tag">🌀</span>
+          <span class="index-tag">Viento</span>
           <span class="wind-full">
             {{ weatherData.data.fengxiang }} | {{ weatherData.data.windSpeed }} km/h
           </span>
