@@ -82,6 +82,7 @@ const siteIcon = {
   Toolbox,
   Fire,
   LaptopCode,
+  Google,
 };
 
 // 链接跳转
