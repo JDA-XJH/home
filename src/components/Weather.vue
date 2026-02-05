@@ -1,25 +1,31 @@
 <template>
   <div class="weather-wrapper" v-if="weatherData.city && weatherData.data.type">
-    <transition name="slide-fade" mode="out-in">
-      <div v-if="step === 0" :key="0" class="weather-item">
-        <span class="city-name">{{ simplifyCity(weatherData.city) }}</span>
-        <span class="divider">&nbsp;·&nbsp;</span>
-        <span class="temp">{{ weatherData.data.temp }}°</span>
-      </div>
+    <span class="city-name">{{ weatherData.city }}</span>
+    <span class="divider">&nbsp;·&nbsp;</span>
 
-      <div v-else-if="step === 1" :key="1" class="weather-item">
-        <span class="weather-type">{{ weatherData.data.type }}</span>
-      </div>
+    <div class="carousel-container">
+      <transition name="slide-fade" mode="out-in">
+        <div v-if="step === 0" :key="0" class="weather-item">
+          <span class="weather-icon">{{ extractEmoji(weatherData.data.type) }}</span>
+          <span class="temp" :style="{ color: getTempColor(weatherData.data.temp) }">
+            {{ weatherData.data.temp }}°
+          </span>
+        </div>
 
-      <div v-else :key="2" class="weather-item">
-        <span class="wind-info">
-          {{ simplifyWind(weatherData.data.fengxiang) }} {{ weatherData.data.fengli }}
-        </span>
-      </div>
-    </transition>
+        <div v-else-if="step === 1" :key="1" class="weather-item">
+          <span class="weather-type">{{ weatherData.data.type }}</span>
+        </div>
+
+        <div v-else :key="2" class="weather-item">
+          <span class="wind-info">
+            {{ simplifyWind(weatherData.data.fengxiang) }} {{ weatherData.data.fengli }}
+          </span>
+        </div>
+      </transition>
+    </div>
   </div>
   <div class="weather-error" v-else>
-    <span>Weather Hidden</span>
+    <span>Weather Loading...</span>
   </div>
 </template>
 
@@ -29,28 +35,26 @@ import { Error } from "@icon-park/vue-next";
 import { ElMessage } from "element-plus";
 import axios from "axios";
 
-// 1. 响应式数据
 const weatherData = reactive({
   city: null,
   data: { type: null, temp: null, fengxiang: null, fengli: null },
 });
 
-const step = ref(0); // 轮换步骤
+const step = ref(0);
 let timer = null;
 
-// 2. 城市缩写：Barcelona -> BCN
-const simplifyCity = (name) => {
-  if (!name) return "??";
-  const cityMap = { "Barcelona": "BCN", "Madrid": "MAD", "Shanghai": "PVG", "Beijing": "PEK" };
-  if (cityMap[name]) return cityMap[name];
-  
-  // 处理逻辑：如果是中文取前2字，如果是英文取逗号前的前3字母大写
-  return /[\u4e00-\u9fa5]/.test(name) 
-    ? name.replace(/[市区县省]$/g, "").substring(0, 2)
-    : name.split(",")[0].substring(0, 3).toUpperCase();
+// 1. 根据温度返回动态颜色
+const getTempColor = (temp) => {
+  if (temp <= 5) return "#00bfff"; // 极冷：深冰蓝
+  if (temp <= 15) return "#50c878"; // 凉爽：翡翠绿
+  if (temp <= 28) return "#ffcc00"; // 舒适：暖黄
+  return "#ff4500"; // 炎热：橙红
 };
 
-// 3. 缩短风向图标
+// 2. 提取 Emoji
+const extractEmoji = (type) => type?.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|\u2600|\u2601|\u26C5/)?.[0] || "🌡️";
+
+// 3. 简化风向图标
 const simplifyWind = (dir) => {
   const map = {
     "北风": "↑", "东北风": "↗", "东风": "→", "东南风": "↘",
@@ -59,11 +63,10 @@ const simplifyWind = (dir) => {
   return map[dir] || dir;
 };
 
-// WMO 天气映射
 const weatherMap = {
   0: "☀️ Despejado", 1: "🌤️ Parcial", 2: "⛅️ Nublado", 3: "☁️ Cubierto",
   45: "🌫 Niebla", 48: "🌫 Calima", 51: "🌧️ Llovizna", 61: "🌧 Ligera",
-  71: "🌨 Ligera", 80: "🌧️ Chubasco", 95: "⛈️ Tormenta"
+  71: "🌨 Ligera", 80: "🌧️ Chubascos", 95: "⛈️ Tormenta"
 };
 
 const getWindScale = (speed) => {
@@ -82,10 +85,9 @@ const getWeatherData = async () => {
   try {
     const locRes = await axios.get("https://ipapi.co/json/");
     const { latitude, longitude, city } = locRes.data;
-    weatherData.city = city || "Unknown";
+    weatherData.city = city || "Desconocido";
 
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
-    const res = await axios.get(weatherUrl);
+    const res = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
     
     if (res.data?.current_weather) {
       const now = res.data.current_weather;
@@ -97,60 +99,68 @@ const getWeatherData = async () => {
       };
     }
   } catch (error) {
-    console.error("Weather Fetch Error:", error);
-    weatherData.city = "Unknown";
-    onError("Error al obtener datos.");
+    console.error("Weather Error:", error);
   }
-};
-
-const onError = (message) => {
-  ElMessage({ message, icon: h(Error, { theme: "filled", fill: "#efefef" }) });
 };
 
 onMounted(() => {
   getWeatherData();
-  // 每 3 秒切换一次显示内容
   timer = setInterval(() => {
     step.value = (step.value + 1) % 3;
   }, 3000);
 });
 
-onUnmounted(() => {
-  if (timer) clearInterval(timer);
-});
+onUnmounted(() => clearInterval(timer));
 </script>
 
 <style scoped>
 .weather-wrapper {
   display: inline-flex;
-  height: 24px;
+  height: 28px;
   align-items: center;
+  padding: 0 10px;
+  background: rgba(0, 0, 0, 0.05); /* 淡淡的底色提升质感 */
+  border-radius: 6px;
   overflow: hidden;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.city-name {
+  font-weight: 700;
+  color: #444;
+}
+
+.divider {
+  color: #999;
+}
+
+.carousel-container {
+  display: inline-block;
 }
 
 .weather-item {
   display: flex;
   align-items: center;
+  gap: 4px;
   white-space: nowrap;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.city-name {
-  font-weight: 900;
-  color: #409eff;
+.temp {
+  transition: color 0.5s ease; /* 颜色变化更平滑 */
 }
 
-/* 动画：向上滑动淡出，向下滑动淡入 */
+/* 动画效果 */
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: all 0.5s ease;
 }
 .slide-fade-enter-from {
-  transform: translateY(10px);
+  transform: translateY(12px);
   opacity: 0;
 }
 .slide-fade-leave-to {
-  transform: translateY(-10px);
+  transform: translateY(-12px);
   opacity: 0;
 }
 </style>
