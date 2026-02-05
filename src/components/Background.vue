@@ -37,17 +37,20 @@ const mainUrl = import.meta.env.VITE_EXTERNAL_BACKGROUND_URL;
 // const bgRandom = Math.floor(Math.random() * 12 + 1);
 
 // 更换壁纸链接
-const changeBg = (type) => 
-    if (type == 0) 
+const changeBg = (type) => {
+    if (type == 0) {
     if (mainUrl) {
   bgUrl.value = "https://bing.img.run/uhd.php";
+    }
+  }
+};
 //    } else if (type == 1) {
 //    bgUrl.value = "https://bing.img.run/uhd.php";
 //  } else if (type == 2) {
 //    bgUrl.value = "https://bing.img.run/rand_uhd.php";
 //  } else if (type == 3) {
 //    bgUrl.value = "https://api.timelessq.com/bing/random";
-  }
+
 // const changeBg = (type) => {
 //  if (type == 0) {
 //    if (mainUrl) {
