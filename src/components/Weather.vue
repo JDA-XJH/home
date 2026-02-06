@@ -1,13 +1,12 @@
 <template>
   <div class="weather-wrapper" v-if="weatherData.city && weatherData.data.type">
     <div class="static-side">
-      <span class="city-name">{{ weatherData.city }}</span>
+      <span class="city-name">{{ displayCity }}</span>
       <span class="divider">|</span>
     </div>
 
     <div class="carousel-container">
       <transition name="slide-fade" mode="out-in">
-        
         <div v-if="step === 0" :key="0" class="weather-item">
           <span class="index-tag">Temperatura</span>
           <span class="weather-icon">{{ extractEmoji(weatherData.data.type) }}</span>
@@ -27,7 +26,6 @@
             {{ weatherData.data.fengxiang }} | {{ weatherData.data.windSpeed }} km/h
           </span>
         </div>
-
       </transition>
     </div>
   </div>
@@ -37,12 +35,19 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, onUnmounted, ref } from "vue";
+/* 1. 引入 computed */
+import { reactive, onMounted, onUnmounted, ref, computed } from "vue";
 import axios from "axios";
 
 const weatherData = reactive({
   city: null,
   data: { type: null, temp: null, fengxiang: null, windSpeed: null },
+});
+
+/* 2. 创建计算属性：超过 10 个字自动截断并加省略号 */
+const displayCity = computed(() => {
+  const name = weatherData.city || "";
+  return name.length > 10 ? name.slice(0, 10) + "..." : name;
 });
 
 const step = ref(0);
@@ -95,6 +100,7 @@ onUnmounted(() => clearInterval(timer));
 </script>
 
 <style scoped>
+/* 保持你原有的样式即可 */
 .weather-wrapper {
   display: inline-flex;
   height: 30px;
@@ -102,50 +108,39 @@ onUnmounted(() => clearInterval(timer));
   padding: 0 12px;
   color: #fff;
   font-family: 'Segoe UI', system-ui, sans-serif;
-  /* 防止外部容器塌陷 */
   overflow: hidden; 
 }
-
-/* 左侧固定：绝对不许动 */
 .static-side {
   display: flex;
   align-items: center;
-  flex-shrink: 0; /* 禁止被挤压 */
+  flex-shrink: 0;
 }
-
 .city-name {
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
   white-space: nowrap;
 }
-
 .divider {
   margin: 0 10px;
   color: rgba(255, 255, 255, 0.2);
   user-select: none;
 }
-
-/* 右侧轮播：设定一个足够大的固定宽度 */
 .carousel-container {
   position: relative;
   display: inline-flex;
   align-items: center;
-  /* 这个宽度要根据你西语最长的那一行（通常是风向那行）来预估 */
-  /* 如果你的城市空间非常紧，可以稍微调小这个值 */
   width: 160px; 
   height: 100%;
   flex-shrink: 0;
 }
-
 .weather-item {
-  position: absolute; /* 使用绝对定位让各组重叠，切换时就不会撑开父容器 */
+  position: absolute;
   left: 0;
   display: flex;
   align-items: center;
   white-space: nowrap;
 }
-
 .index-tag {
   font-size: 9px;
   background: #007aff; 
@@ -156,15 +151,12 @@ onUnmounted(() => clearInterval(timer));
   font-weight: 800;
   flex-shrink: 0;
 }
-
 .temp { font-weight: 700; font-size: 15px; }
 .weather-type, .wind-full {
   font-size: 13px;
   color: #efefef;
   font-weight: 500;
 }
-
-/* 动画效果 */
 .slide-fade-enter-active, .slide-fade-leave-active {
   transition: all 0.5s ease;
 }
