@@ -132,7 +132,7 @@ onBeforeUnmount(() => {
     height: 100%;
     object-fit: cover;
     backface-visibility: hidden;
-    filter: blur(20px) brightness(0.3);
+    filter: blur(0px) brightness(1);
     transition: filter 0.3s, transform 0.3s;
     animation: fade-blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     animation-delay: 0.45s;
