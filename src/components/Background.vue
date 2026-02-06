@@ -24,43 +24,52 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount, h } from "vue";
 import { mainStore } from "@/store";
 import { Error } from "@icon-park/vue-next";
 
 const store = mainStore();
-const bgUrl = ref("");
+const bgUrl = ref(null);
 const imgTimeout = ref(null);
 const emit = defineEmits(["loadComplete"]);
-
-// 获取环境变量
 const mainUrl = import.meta.env.VITE_EXTERNAL_BACKGROUND_URL;
-// 壁纸随机数 (1-12)
+// 壁纸随机数
+// 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
 const bgRandom = Math.floor(Math.random() * 12 + 1);
 
-/**
- * 壁纸切换逻辑
- * @param {string|number} type 切换类型
- */
+// 更换壁纸链接
 const changeBg = (type) => {
-  if (type == 0) {
-    // 默认壁纸
+    if (type == 0) {
     if (mainUrl) {
-      bgUrl.value = mainUrl.replace('{bgrandom}', bgRandom);
-    } else {
-      bgUrl.value = `/home-image/background${bgRandom}.jpg`;
+      bgUrl.value = "https://bing.img.run/uhd.php";
+} else {
+      bgUrl.value = "https://api.dujin.org/bing/1920.php"; 
     }
-  } else if (type == 1) {
-    // 必应每日
-    bgUrl.value = "https://bing.img.run/uhd.php";
-  } else if (type == 2) {
-    // 必应随机
-    bgUrl.value = "https://bing.img.run/rand_uhd.php";
-  } else if (type == 3) {
-    // 随机风景
+  } else {
     bgUrl.value = "https://api.timelessq.com/bing/random";
   }
 };
+//     else if (type == 1) {
+//    bgUrl.value = "https://bing.img.run/uhd.php";
+//  } else if (type == 2) {
+//    bgUrl.value = "https://bing.img.run/rand_uhd.php";
+//  } else if (type == 3) 
+//    bgUrl.value = "https://api.timelessq.com/bing/random";
+
+// const changeBg = (type) => {
+//  if (type == 0) {
+//    if (mainUrl) {
+//      bgUrl.value = mainUrl.replace('{bgrandom}', bgRandom);
+//    } else {
+//      bgUrl.value = `/home-image/background${bgRandom}.jpg`;
+//    }
+//  } else if (type == 1) {
+//    bgUrl.value = "https://bing.img.run/uhd.php";
+//  } else if (type == 2) {
+//    bgUrl.value = "https://tu.ltyuanfang.cn/api/fengjing.php";
+//  } else if (type == 3) {
+//    bgUrl.value = "https://api.imlazy.ink/img";
+//  }
+// };
 
 // 图片加载完成
 const imgLoadComplete = () => {
@@ -74,39 +83,39 @@ const imgLoadComplete = () => {
 
 // 图片动画完成
 const imgAnimationEnd = () => {
+  console.log("Fondo de pantalla cargado y animación completada");
+  // 加载完成事件
   emit("loadComplete");
 };
 
-// 图片显示失败回退
+// 图片显示失败
 const imgLoadError = () => {
-  console.error("Fondo de pantalla fallido:", bgUrl.value);
-  if (typeof ElMessage !== 'undefined') {
-    ElMessage({
-      message: "Error al cargar el fondo, usando imagen predeterminada.",
-      icon: h(Error, {
-        theme: "filled",
-        fill: "#efefef",
-      }),
-    });
-  }
+  console.error("No se pudo cargar el fondo de pantalla:", bgUrl.value);
+  ElMessage({
+    message: "No se pudo cargar el fondo de pantalla; el fondo de pantalla predeterminado se cambió temporalmente.",
+    icon: h(Error, {
+      theme: "filled",
+      fill: "#efefef",
+    }),
+  });
   bgUrl.value = `/home-image/background${bgRandom}.jpg`;
 };
 
-// 监听类型变化
+// 监听壁纸切换
 watch(
   () => store.coverType,
   (value) => {
-    store.setImgLoadStatus(false);
     changeBg(value);
   },
 );
 
 onMounted(() => {
+  // 加载壁纸
   changeBg(store.coverType);
 });
 
 onBeforeUnmount(() => {
-  if (imgTimeout.value) clearTimeout(imgTimeout.value);
+  clearTimeout(imgTimeout.value);
 });
 </script>
 
@@ -132,12 +141,13 @@ onBeforeUnmount(() => {
     height: 100%;
     object-fit: cover;
     backface-visibility: hidden;
-    filter: blur(0px) brightness(1);
-    transition: filter 0.3s, transform 0.3s;
+    filter: blur(20px) brightness(0.3);
+    transition:
+      filter 0.3s,
+      transform 0.3s;
     animation: fade-blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     animation-delay: 0.45s;
   }
-
   .gray {
     opacity: 1;
     position: absolute;
@@ -147,58 +157,37 @@ onBeforeUnmount(() => {
     height: 100%;
     background-image: radial-gradient(rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.5) 100%),
       radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 0.3) 166%);
+
     transition: 1.5s;
     &.hidden {
       opacity: 0;
+      transition: 1.5s;
     }
   }
-
   .down {
-    font-size: 14px;
+    font-size: 16px;
     color: white;
     position: absolute;
     bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: block;
+    padding: 20px 26px;
+    border-radius: 8px;
+    background-color: #00000030;
+    width: 120px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 12px 24px;
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.3);
-    min-width: 200px;
-    text-decoration: none;
-    backdrop-filter: blur(4px);
-    transition: all 0.3s;
-
     &:hover {
-      transform: translateX(-50%) scale(1.05);
-      background-color: rgba(0, 0, 0, 0.6);
+      transform: scale(1.05);
+      background-color: #00000060;
     }
     &:active {
-      transform: translateX(-50%) scale(0.95);
+      transform: scale(1);
     }
   }
-}
-
-@keyframes fade-blur-in {
-  from {
-    filter: blur(50px) brightness(0);
-    transform: scale(1.1);
-  }
-  to {
-    filter: blur(20px) brightness(0.3);
-    transform: scale(1);
-  }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
