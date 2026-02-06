@@ -54,11 +54,16 @@ const step = ref(0);
 let timer = null;
 
 const getTempColor = (temp) => {
-  if (temp <= 5) return "#00bfff";
-  if (temp <= 15) return "#50c878";
-  if (temp <= 28) return "#ffcc00";
-  return "#ff4500";
-};
+  if (temp <= 0) return "#1E90FF";    // 极冷（深蓝色）
+  if (temp <= 10) return "#00BFFF";   // 冷（浅蓝色）
+  if (temp <= 22) return "#50C878";   // 舒适（翠绿色）
+  if (temp <= 30) return "#FFCC00";   // 稍热（暖黄色）
+  if (temp <= 38) return "#FF8C00";   // 炎热（深橙色）
+  if (temp <= 50) return "#FF4500";   // 极热（橙红色）
+  
+  // 这里的颜色就是你说的“岩浆感”
+  return "#8B0000";                   // 危险/暗红岩浆色 (DarkRed)
+}
 
 const extractEmoji = (type) => type?.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]|\u2600|\u2601|\u26C5/)?.[0] || "🌡️";
 
