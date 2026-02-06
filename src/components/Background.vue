@@ -40,14 +40,14 @@ const bgRandom = Math.floor(Math.random() * 12 + 1);
 const changeBg = (type) => {
     if (type == 0) {
     if (mainUrl) {
-      bgUrl.value = "https://bing.img.run/uhd.php";
+      bgUrl.value = "https://api.timelessq.com/bing/random";
 } else {
       bgUrl.value = "https://api.dujin.org/bing/1920.php"; 
+}
     }
-  } else {
-    bgUrl.value = "https://api.timelessq.com/bing/random";
-  }
 };
+
+
 //     else if (type == 1) {
 //    bgUrl.value = "https://bing.img.run/uhd.php";
 //  } else if (type == 2) {
