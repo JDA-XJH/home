@@ -1,4 +1,5 @@
-<strong><h2>MiFengの主页</h2></strong>
+<strong><h2>XJH の WebSite</h2></strong>
+# TRANSLATED TO SPANISH / TRADUCIDO A ESPAÑOL / 翻译到西班牙语
 **二改于[Imsyy/home](https://github.com/imsyy/home/) 仅自用不建议使用我的**
 然后再改于 [FrecklyComb1728/home](https://github.com/FrecklyComb1728/home)
 ### 部署
@@ -6,7 +7,7 @@
 
 ### 天气
 
-> 天气api换成了[MIFENG API](https://api.mfawa.top/)
+> ~~天气api换成了[MIFENG API](https://api.mfawa.top/)~~
 
 
 ### 字体
@@ -30,6 +31,7 @@
 // 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
 const bgRandom = Math.floor(Math.random() * 10 + 1);
 ```
+
 
 
 
