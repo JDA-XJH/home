@@ -88,7 +88,7 @@ export const helloInit = () => {
   } else if (hour < 22) {
     hello = "Buenas Noche";
   } else {
-    hello = "Es tarde en la noche";
+    hello = "Buenas noche";
   }
   ElMessage({
     dangerouslyUseHTMLString: true,
@@ -102,9 +102,10 @@ export const helloInit = () => {
 
 // 默哀模式
 const anniversaries = {
+  
 //  1.8: "周恩来逝世纪念日",
 //  4.4: "清明节",
-//  5.12: "汶川大地震纪念日",
+  5.12: "汶川大地震纪念日",
 //  7.7: "中国人民抗日战争纪念日",
 //  9.18: "九·一八事变纪念日",
 //  12.13: "南京大屠杀死难者国家公祭日",
